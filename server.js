@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
 	const subdomain = req.headers.host.split('.')[0];
 	// subdomains
 	if (subdomain === 'app') {
-		filePath = './app/app.html';
+		filePath = '/app/app.html';
 	}
 	// standard route
 	if (filePath === '/') {
@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
 			res.end(contents);
 		})
 		.catch(err => {
-			fs.readFile(__dirname + '../app/404.html')
+			fs.readFile(__dirname + '/app/404.html')
 				.then(contents => {
 					res.setHeader("Content-Type", "text/html");
 					res.writeHead(404);

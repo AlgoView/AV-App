@@ -99,7 +99,7 @@ index												=	{
 		data										:	undefined,
 		get											:	function(){
 			let getdata								=	$.ajax({
-				url									:	'app/index/index.json',
+				url									:	'/app/index/index.json',
 				dataType							:	'json',
 				type								:	'GET',
 				success								:	function(){
