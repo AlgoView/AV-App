@@ -103,69 +103,63 @@ var layers												=	{
 		for(var layer in layers){
 			console.log(layer);
 			if( ["properties","getData","get","set","render"].indexOf(layer) == -1 ){
-				console.log("non existing layer: " + layer);
 				layers[layer] = new Layer(layer);
 			}
 		}
 		_.merge(layers,layers.getData)
-		// console.log('Layers.set()')
-		// console.log(layers.getData)
-		// console.log(layers)
+
 		return;
 	},
-	render												:	function(layerName){
+	render												:	function(){
 		var append										=	'';
 		var jsid										=	'layers';
 		var htmlid										=	'layers';
-		var layerRoot									=	eval('layers.' + layerName);
+		var layerRoot									=	layers
 
-		if 		(typeof layerRoot === 'undefined'	) 	{ console.log('Error: layerRoot is undefined'); return; }
-		else if (typeof layerRoot === 'string'		) 	{ console.log('layerRoot is a string, object expected'); return; }
-		else if (Object.keys(layerRoot).length == 0) 	{ console.log('layerRoot is an empty object');return; };
+		// if 		(typeof layers === 'undefined'	) 	{ console.log('Error: layerRoot is undefined'); return; }
+		// else if (typeof layers === 'string'		) 	{ console.log('layerRoot is a string, object expected'); return; }
+		// else if (Object.keys(layers).length == 0) 	{ console.log('layerRoot is an empty object');return; };
 
 		for(var i = 0; i < Object.keys(layerRoot).length; i++) {
 			var layer = Object.keys(layerRoot)[i];
 			
-			jsid = 'layers' + '.' + layerName + '.' + layer;
-			htmlid = 'layers' + '-' + layerName + '-' + layer;
+			jsid = 'layers' + '.' + layer;
+			htmlid = 'layers' + '-' + layer;
 			
 			if( ["properties","getData","get","set","render"].indexOf(layer) == -1 ){
-				// console.log(jsid + ' type: ') + eval(jsid + '.properties.element.type');
-				// console.log(jsid + ' subtype: ' + eval(jsid + '.properties.element.subtype'));
+				console.log("layer: " + layer);
 				append									+=
 				'<div id="' + htmlid + '" style="display:none">';
 
-				// for(var sublayer in eval('layers.' + layer))	{
-				// 	jsid								=	'layers' + '.' + layer + '.' + sublayer;
-				// 	htmlid 								=	'layers' + '-' + layer + '-' + sublayer;
-				// 	if( ["properties","getData","get","set","render"].indexOf(sublayer) == -1 )		{
-				// 		// console.log(jsid + ' type: ' + eval(jsid + '.properties.element.type'));
-				// 		// console.log(jsid + ' subtype: ' + eval(jsid + '.properties.element.subtype'));
-				// 		append							+= 
-				// 		'<div id="' + htmlid + '" style="display:none">';
+				for(var sublayer in layerRoot[layer]) {
+					console.log(sublayer);
+					jsid = 'layers' + '.' + layer + '.' + sublayer;
+					htmlid = 'layers' + '-' + layer + '-' + sublayer;
 
-				// 		for(var subsublayer in eval('layers.' + layer + '.' + sublayer))			{
-				// 			jsid						=	'layers' + '.' + layer + '.' + sublayer + '.' + subsublayer;
-				// 			htmlid 						=	'layers' + '-' + layer + '-' + sublayer + '-' + subsublayer;
-				// 			if( ["properties","getData","get","set","render"].indexOf(subsublayer) == -1 )	{
-				// 				// console.log(jsid + ' type: ' + eval(jsid + '.properties.element.type'));
-				// 				// console.log(jsid + ' subtype: ' + eval(jsid + '.properties.element.subtype'));
-				// 				append					+= 
-				// 				'<div id="' + htmlid + '" style="display:none">';
+					if( ["properties","getData","get","set","render"].indexOf(sublayer) == -1 ) {
+						console.log("sublayer: " + sublayer);
+						append += '<div id="' + htmlid + '" style="display:none">';
+						append += '</div>';
 
-				// 				append					+=
-				// 				'</div>';
-				// 			}
-				// 		};
-				// 		append							+=
-				// 		'</div>';
-				// 	}
-				// };
+						for(var subsublayer in layerRoot[layer][sublayer])			{
+							jsid						=	'layers' + '.' + layer + '.' + sublayer + '.' + subsublayer;
+							htmlid 						=	'layers' + '-' + layer + '-' + sublayer + '-' + subsublayer;
+
+							if( ["properties","getData","get","set","render"].indexOf(subsublayer) == -1 )	{
+								console.log("subsublayer: " + subsublayer);
+							append					+= 
+							'<div id="' + htmlid + '" style="display:none">';
+	
+							append					+=
+							'</div>';
+							}
+						}			
+					}
+				};
 				append									+=
 				'</div>';
 			}
 		};
-		// console.log('APPEND');
 		$('body').append(append);
 		index.body.construct.status						=	true;
 	}
