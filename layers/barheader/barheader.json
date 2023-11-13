@@ -1,0 +1,193 @@
+{
+	"properties"											:	{
+		"element"											:	{
+			"type"											:	"bar",
+			"subtype"										:	"full"
+		},
+		"placement"											:	{
+			"to"											:	"top",
+			"state"											:	"solid",
+			"dimensions"									:	["undefined","100vw"]
+		},
+		"visibility"										:	{
+			"status"										:	false,
+			"data"											:	"undefined"
+		}
+	},
+	"platform"												:	{
+		"properties"										:	{
+			"element"										:	{
+				"type"										:	"div"
+			},
+			"placement"										:	{
+				"to"										:	"left",
+				"dimensions"								:	["undefined","auto"]
+			}
+		},
+		"drawer"											:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"drawer"
+				},
+				"placement"									:	{
+					"to"									:	"left"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"logo"												:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"bar",
+					"subtype"								:	"header",
+					"symbol"								:	false,
+					"content"								:	false,
+					"tooltip"								:	false
+				},
+				"placement"									:	{
+					"to"									:	"top",
+					"state"									:	"solid",
+					"dimensions"							:	["undefined","100vw"],
+					"margin"								:	[0,0,0,0],
+					"padding"								:	[0,0,0,0]
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				},
+				"visibility"								:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		}
+	},
+	"search"												:	{
+		"properties"										:	{
+			"element"										:	{
+				"type"										:	"div"
+			},
+			"placement"										:	{
+				"dimensions"								:	["undefined","auto"]
+			}
+		},
+		"return"											:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"return"
+				},
+				"placement"									:	{
+					"to"									:	"left"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"form"												:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"form",
+					"subtype"								:	"header"
+				},
+				"placement"										:	{
+					"state"									:	"solid",
+					"dimensions"							:	["undefined","fill"],
+					"margin"								:	[0,0,0,0],
+					"padding"								:	[0,0,0,0]
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"button"											:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"search"
+				},
+				"placement"									:	{
+					"to"									:	"right"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		}
+	},
+	"personal"												:	{
+		"properties"										:	{
+			"element"										:	{
+				"type"										:	"div"
+			},
+			"placement"										:	{
+				"to"										:	"right",
+				"dimensions"								:	["undefined","auto"]
+			}
+		},
+		"write"												:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"feather"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"talk"												:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"chats"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"alerts"											:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"bell"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		},
+		"account"											:	{
+			"properties"									:	{
+				"element"									:	{
+					"type"									:	"button",
+					"subtype"								:	"header",
+					"symbol"								:	"profile"
+				},
+				"interact"									:	{
+					"status"								:	false,
+					"data"									:	"undefined"
+				}
+			}
+		}
+	}
+}

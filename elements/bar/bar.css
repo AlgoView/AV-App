@@ -1,0 +1,50 @@
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Bar								    ▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Control								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+:root{
+	--unit-hpip    						        :	3.6rem								;
+	--unit-wpip    						        :	4.0rem								;
+
+	/* --h-p-icon-height							:	var(--unit-hpip)					;
+	--h-p-icon-width							:	var(--unit-wpip )					;
+
+	--h-pl-i-width								:	var(--h-p-icon-width)				;
+	--h-pl-l-width								:	11rem								;
+
+	--h-pe-width								:	calc( 4 * var(--h-p-icon-width) )	;	/* X * 4rem , Amount of Buttons X */
+
+	/* --h-s-f-width-min							:	calc(100vw - (var(--h-pl-i-width) + var(--h-pl-l-width) + var(--h-pe-width) + var(--h-p-icon-width)));
+	--h-s-f-width-max							:	calc(100vw - ( 2 * ( var(--h-p-icon-width))));
+
+
+	--h-s-width									:	auto								;									/* switch between auto and 100vw */
+	/* --h-s-f-width								:	var(--h-s-f-width-min)				; 									/* Switch between these for MIN MAX ExptoMax DecrtoMin */
+	/* --h-s-position								:	relative							;
+	--h-s-right									:	var(--h-pe-width)					; */ 
+}
+
+.bar{
+	/* Placement */
+		position									:	absolute							;
+		top											:	0									;
+		z-index										:	700									;
+	
+		width										:	100vw								;
+	
+		margin										:	0	0								;
+		padding										:	0	0								;
+	/* Type */
+		display										:	block								;
+	/* Style */
+		background-color							:	var(--color-base-0)					;
+		-moz-box-shadow								:	var(--shadow-drop-1)				;
+		-webkit-box-shadow							:	var(--shadow-drop-1)				;
+		box-shadow									:	var(--shadow-drop-1)				;
+}
+.bar.full{
+	/* Placement */
+		height										:	var(--unit-hpip)					;
+}
+.bar.half{
+	/* Placement */
+		height										:	calc( var(--unit-hpip)	/2 )		;  
+}

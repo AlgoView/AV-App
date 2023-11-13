@@ -1,0 +1,148 @@
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ barheader								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Control								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+:root{
+	--h-height									:	3.6rem								;
+
+	--h-p-icon-height							:	var(--h-height)						;
+	--h-p-icon-width							:	4rem								;
+
+	--h-pl-i-width								:	var(--h-p-icon-width)				;
+	--h-pl-l-width								:	11rem								;
+
+	--h-pe-width								:	calc( 4 * var(--h-p-icon-width) )	;	/* X * 4rem , Amount of Buttons X */
+
+	--h-s-f-width-min							:	calc(100vw - (var(--h-pl-i-width) + var(--h-pl-l-width) + var(--h-pe-width) + var(--h-p-icon-width)));
+	--h-s-f-width-max							:	calc(100vw - ( 2 * ( var(--h-p-icon-width))));
+
+
+	--h-s-width									:	auto								;									/* switch between auto and 100vw */
+	--h-s-f-width								:	var(--h-s-f-width-min)				; 									/* Switch between these for MIN MAX ExptoMax DecrtoMin */
+	--h-s-position								:	relative							;
+	--h-s-right									:	var(--h-pe-width)					;
+}
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Tags									▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+#barheader{
+/* Placement */
+	position									:	absolute							;
+	top											:	0									;
+	z-index										:	700									;
+
+	height										:	var(--h-height)						;
+	width										:	100vw								;
+
+	margin										:	0	0								;
+	padding										:	0	0								;
+/* Type */
+	display										:	block								;
+/* Style */
+	background-color							:	var(--color-base-0)					;
+	-moz-box-shadow								:	var(--shadow-drop-1)				;
+	-webkit-box-shadow							:	var(--shadow-drop-1)				;
+	box-shadow									:	var(--shadow-drop-1)				;
+}
+	#barheader-platform{
+		position								:	absolute							;
+		left									:	0									;
+		z-index									:	1									;
+
+		width									:	calc(var(--h-p-icon-width) + var(--h-pl-l-width) );
+
+		display									:	flex								;
+		align-items								:	center								;
+		}
+		#barheader-platform-drawer{}
+		#barheader-platform-logo{
+			padding								:	calc(((var(--h-height) - 1.25rem) / 2) - var(--borderpx))	0	;
+
+			width								:	var(--h-pl-l-width)					;
+
+			font-family							:	'Biryani', sans-serif				;
+			font-size							:	1.25rem								;
+			font-weight							:	600									;
+		}
+	#barheader-search{
+		position								:	absolute							;
+		right									:	var(--h-s-right)					;		
+		z-index									:	9									;
+
+		width									:	auto								;
+		height									:	var(--h-height)						;
+		min-width								:	var(--h-p-icon-width)				;
+		display									:	flex								;
+		flex-direction							:	row									;
+		background-color						:	var(--color-base-0)					;
+	}
+	#barheader-search:hover{
+		background-color						:	var(--color-base-1)					;
+	}
+		#barheader-search-return{
+			display								:	flex								;
+			width								:	var(--h-p-icon-width)				;
+		}
+		#barheader-search-button{
+			display								:	flex								;
+			width								:	var(--h-p-icon-width)				;
+		}
+		#barheader-search-form{
+			display								:	var(--h-s-f-display)				;
+			height								:	var(--h-height)						;	
+			width								:	var(--h-s-f-width)					;
+		}
+			#barheader-search-form-input{
+				box-sizing						:	border-box							;
+				padding							:	0	0	0	1rem					;
+				/* margin							:	0	0	0	1rem					; */
+				height							:	var(--h-height)						;
+				width							:	calc(100vw - (var(--h-pl-i-width) + var(--h-pl-l-width) + var(--h-pe-width) + var(--h-p-icon-width) ));
+				flex-grow						:	5									;
+
+				border							:	0									;
+			}
+
+	#barheader-personal{
+		position								:	absolute							;
+		right									:	0									;
+		z-index									:	2									;
+
+		width									:	calc(4 * var(--h-p-icon-width))		;
+
+		display									:	flex								;
+		flex-shrink								:	0									;
+		flex-grow								:	0									;
+	}
+		#barheader-personal-create{}
+		#barheader-personal-messages{}
+		#barheader-personal-alerts{}
+		#barheader-personal-account{}
+
+
+/* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Classes								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
+.h-p-icon{
+	display										:	flex								;
+	justify-content								:	center								;
+	
+	padding										:	1.25rem	0							;
+	min-width									:	var(--h-p-icon-width)				;
+	height										:	3.5rem								;
+	
+	height										:	var(--h-p-icon-height)			;
+	width										:	var(--h-p-icon-width)				;
+	padding										:	calc( (var(--h-p-icon-height) - var(--svg-width-height)) / 2 )
+												calc( (var(--h-p-icon-width) 	- var(--svg-width-height)) / 2 ); /* Remain 1.2 x 1.2 rem cube for icon */
+
+	color										:	var(--color-key-5)					;
+	transition									:	var(--transition-0)					;}
+.h-p-icon svg{
+	width										:	4rem								;
+}
+.h-p-icon:hover{
+	color										:	var(--color-key-6)					;
+	color										:	var(--color-key-7)					;
+	background-color							:	var(--color-key-0)					;}
+.h-p-icon.active{
+	color										:	var(--color-blue)					;
+	background-color							:	var(--color-key-1)					;
+}
+.h-p-icon.active:hover{
+	background-color							:	var(--color-key-2)					;
+}

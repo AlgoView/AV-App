@@ -1,0 +1,8 @@
+elements.bar                = {
+    full                    : {
+        
+    },
+    half                    : {
+    
+    }
+}

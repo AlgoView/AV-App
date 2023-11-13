@@ -1,0 +1,30 @@
+{
+	"title": "AlgoView",
+	"meta": {
+		"description": ["Algoview Visualizer"],
+		"keywords": ["AlgoView"],
+		"author": ["Michiel Celis"]
+	},
+	"styling": {
+		"reset": {},
+		"colors": {},
+		"scaling": {},
+		"layout": {},
+		"typography": {},
+		"effects": {},
+		"styles": {}
+	},
+	"elements": {},
+	"modules": {
+		"cookie": {},
+		"optimize": {},
+		"keyboard": {},
+		"mouse": {},
+		"windowx": {}
+	},
+	"layers": {
+		"barheader": 1
+	},
+	"scripts": {},
+	"extenions": {}
+}
