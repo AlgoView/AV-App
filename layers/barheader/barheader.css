@@ -21,7 +21,7 @@
 	--h-s-right									:	var(--h-pe-width)					;
 }
 /* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Tags									▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
-#barheader{
+#layers-barheader{
 /* Placement */
 	position									:	absolute							;
 	top											:	0									;
@@ -40,7 +40,7 @@
 	-webkit-box-shadow							:	var(--shadow-drop-1)				;
 	box-shadow									:	var(--shadow-drop-1)				;
 }
-	#barheader-platform{
+	#layers-barheader-platform{
 		position								:	absolute							;
 		left									:	0									;
 		z-index									:	1									;
@@ -50,8 +50,8 @@
 		display									:	flex								;
 		align-items								:	center								;
 		}
-		#barheader-platform-drawer{}
-		#barheader-platform-logo{
+		#layers-barheader-platform-drawer{}
+		#layers-barheader-platform-logo{
 			padding								:	calc(((var(--h-height) - 1.25rem) / 2) - var(--borderpx))	0	;
 
 			width								:	var(--h-pl-l-width)					;
@@ -60,7 +60,7 @@
 			font-size							:	1.25rem								;
 			font-weight							:	600									;
 		}
-	#barheader-search{
+	#layers-barheader-search{
 		position								:	absolute							;
 		right									:	var(--h-s-right)					;		
 		z-index									:	9									;
@@ -72,23 +72,23 @@
 		flex-direction							:	row									;
 		background-color						:	var(--color-base-0)					;
 	}
-	#barheader-search:hover{
+	#layers-barheader-search:hover{
 		background-color						:	var(--color-base-1)					;
 	}
-		#barheader-search-return{
+		#layers-barheader-search-return{
 			display								:	flex								;
 			width								:	var(--h-p-icon-width)				;
 		}
-		#barheader-search-button{
+		#layers-barheader-search-button{
 			display								:	flex								;
 			width								:	var(--h-p-icon-width)				;
 		}
-		#barheader-search-form{
+		#layers-barheader-search-form{
 			display								:	var(--h-s-f-display)				;
 			height								:	var(--h-height)						;	
 			width								:	var(--h-s-f-width)					;
 		}
-			#barheader-search-form-input{
+			#layers-barheader-search-form-input{
 				box-sizing						:	border-box							;
 				padding							:	0	0	0	1rem					;
 				/* margin							:	0	0	0	1rem					; */
@@ -99,7 +99,7 @@
 				border							:	0									;
 			}
 
-	#barheader-personal{
+	#layers-barheader-personal{
 		position								:	absolute							;
 		right									:	0									;
 		z-index									:	2									;
@@ -110,10 +110,10 @@
 		flex-shrink								:	0									;
 		flex-grow								:	0									;
 	}
-		#barheader-personal-create{}
-		#barheader-personal-messages{}
-		#barheader-personal-alerts{}
-		#barheader-personal-account{}
+		#layers-barheader-personal-create{}
+		#layers-barheader-personal-messages{}
+		#layers-barheader-personal-alerts{}
+		#layers-barheader-personal-account{}
 
 
 /* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Classes								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */

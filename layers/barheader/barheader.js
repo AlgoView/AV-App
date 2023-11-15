@@ -1,1 +1,1 @@
-layers.barheader									=	new Layer('barheader');
+// layers.barheader									=	[];

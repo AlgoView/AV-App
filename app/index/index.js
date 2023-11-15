@@ -176,7 +176,8 @@ index												=	{
 					layunder 					=	index.construct.data.layers[i];
 					append						+=
 					'<!-- ' + text.toBold(name.toUpperCase()) + ' -->'+
-					'<script	rel="external"		type="text/javascript"	src="layers/' + name + '/' + name + '.js"></script>';
+					'<script	rel="external"		type="text/javascript"	src="layers/' + name + '/' + name + '.js"></script>' +
+					'<link	rel="stylesheet"		type="text/css"	href="layers/' + name + '/' + name + '.css"></link>';
 				}
 				$('head').append(append);
 				return
