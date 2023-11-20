@@ -12,16 +12,13 @@ window.onload = function() {
       return index.construct.build();
     })
     .then(function() {
-      console.log('@controller layers.get()');
       return layers.get();
     })
     .then(function() {
-      console.log('@controller layers.set()');
-      return layers.set();
+      return layers.render();
     })
     .then(function() {
-      console.log('@controller layers.render()');
-      return layers.render('barheader');
+      
     })
     .catch(function(error) {
       console.error(error);

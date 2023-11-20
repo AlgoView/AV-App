@@ -1,6 +1,6 @@
 class Layer 									{
     constructor(layername) 									{
-        this.layername 										= layername; // HERE
+        this.layername 										=	"layers-" + layername;
 	}
 	properties												=	{
 		element												:	{
@@ -46,7 +46,7 @@ class Layer 									{
 			show											:	() => {
 				this.properties.visibility.status 			=	true;
 				console.log(this.layername);
-				let element 								=	document.getElementById(this.layername);// HERE
+				let element 								=	document.getElementById(this.layername);
 				console.log(element);
 				element.style.display 						=	'block';
 				element.classList.add('fade-in');
@@ -54,7 +54,7 @@ class Layer 									{
 			},
 			hide											:	() => {
 				this.properties.visibility.status 			=	false;
-				let element 								=	document.getElementById(this.layername);// HERE
+				let element 								=	document.getElementById(this.layername);
 				element.style.display 						=	'none';
 				element.classList.add('fade-out');
 				windowx.rescale();
@@ -80,46 +80,45 @@ class Layer 									{
 
 window.layers  												=	{
 	isValidKey												:	function(key) {
-		const EXCLUDED_KEYS 								=	["isValidKey","properties","getData","get","set","render"];
+		const EXCLUDED_KEYS 								=	["isValidKey","properties","getData","get","set","render","layername"];
 		return !EXCLUDED_KEYS.includes(key);
 	},
-    getData													:	{},
 	get														:	function(){
 		let self 											=	this;
 		let ajaxcalls 										=	[];
-		for(var layer in index.construct.data.layers){
+		for(let layer in index.construct.data.layers){
 			layers[layer] 									=	new Layer(layer);
 		}
 		return new Promise((resolve, reject) => {
-			Object.keys(self).forEach(layer => {
-				if(self.isValidKey(layer)){
-					let ajaxCall 							=	fetch('layers/' + layer + '/' + layer + '.json')
-						.then(response => response.json())
+            Object.keys(self).forEach(layer => {
+                if(self.isValidKey(layer)){
+                    let ajaxCall = fetch('layers/' + layer + '/' + layer + '.json')
+                        .then(response => response.json())
 						.then(data => {
-							this.getData[layer] 			= data;
-							layers[layer].properties 		= data;  // Assign the fetched data to the 'properties' property
+							Object.keys(data).forEach((key) => {
+								if (key === 'properties' && data[key] instanceof Object) {
+									Object.keys(data[key]).forEach((propKey) => {
+										if (!layers[layer].properties.hasOwnProperty(propKey)) {
+											layers[layer].properties[propKey] = data[key][propKey];
+										}
+									});
+								} else if (!layers[layer].hasOwnProperty(key)) {
+									layers[layer][key] = data[key];
+								}
+							});
 							return layer;
 						});
-	
-					ajaxcalls.push(ajaxCall);
-				}
-			});
+
+                    ajaxcalls.push(ajaxCall);
+                }
+            });
 	
 			Promise.all(ajaxcalls)
-				.then(() => resolve('layers.set()'))
-				.catch(() => reject());
-		});              
-	},
-	set														:	function(){
-		console.log(layers)
 
-		Object.keys(layers).forEach(layer => {
-			if(this.isValidKey(layer)){
-				console.log(layer);
-				window.layers[layer] 						=	new Layer(layer);
-			}
-		});
-		// Object.assign(layers, layers.getData);
+			.then(() => {resolve('layers.set()');
+		})
+            .catch(() => reject());
+		});              
 	},
 	render													:	function(){
 		const layerRoot 									=	layers;
@@ -158,27 +157,3 @@ window.layers  												=	{
 		index.body.construct.status = true;
 	}
 };
-
-// class Layer 												{
-//     constructor(layername) 									{
-//         this.layername 										= layername; // HERE
-// 	}
-// 	properties												=	{
-// 		visibility											:	{
-// 			status											:	undefined,
-// 			show											:	function() {
-// 				let element 								=	document.getElementById(this.layername);// HERE
-// 				console.log(element);
-// 			}
-// 		}
-// 	}
-// };
-
-// window.layers  												= {
-// 	set														: function(layer){
-// 		window.layers[layer]								= [];
-// 		window.layers[layer] 								= new Layer(layer);
-// 	}
-// };
-
-console.log(layers);
