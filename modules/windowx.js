@@ -26,18 +26,17 @@ windowx									    =	{
 	},
 	placement								:	function(){}
 }
-$(function(){
-	setInterval(windowx.rescale(), 1000);
-	});
+window.onload = function() {
+	setInterval(windowx.rescale, 1000);
 
-	$(windowx).resize(function() {
-		setTimeout(function(){
+	window.addEventListener('resize', function() {
+		setTimeout(function() {
 			device.set();
 			windowx.rescale();
 		}, fadelenght);
 	});
-	$(windowx).ready(function(){
-		setTimeout(function(){
-			windowx.rescale();
-		}, fadelenght);
-	});
+
+	setTimeout(function() {
+		windowx.rescale();
+	}, fadelenght);
+};

@@ -1,3 +1,77 @@
+const appendHTML = (type, attributes) => {
+    let html = '';
+    switch (type) {
+        case 'category':
+            html += `<!-- ${attributes} -->`;
+            break;
+        case 'title':
+            html += `<title>${attributes.title}</title>`;
+            break;
+        case 'meta':
+            html += `<meta name="${attributes.name}" layunder="${attributes.layunder}">`;
+            break;
+        case 'script':
+            html += `<script rel="external" type="text/javascript" src="${attributes.src}"></script>`;
+            break;
+        case 'link':
+            html += `<link rel="stylesheet" type="text/css" href="${attributes.href}"></link>`;
+            break;
+    }
+    return html;
+};
+
+const constructCategory = (category, data, fileType = 'both', groupType = '') => {
+	let element;
+	let comment = document.createComment(` ${category} `);
+	document.head.appendChild(comment);
+
+	if (category === 'title') {
+		element = document.createElement('title');
+		element.textContent = data;
+		document.head.appendChild(element);
+	} else {
+		if (groupType === 'grouped') {
+			element = document.createElement('script');
+			element.src = `${category}/${category}.js`;
+			document.head.appendChild(element);
+		}
+		for (let name in data) {
+			if (category === 'meta') {
+				element = document.createElement('meta');
+				element.name = name;
+				element.content = data[name];
+				document.head.appendChild(element);
+			} else {
+				if (groupType === 'grouped'){
+					if (fileType === 'both' || fileType === 'js') {
+						element = document.createElement('script');
+						element.src = `${category}/${name}/${name}.js`;
+						document.head.appendChild(element);
+					}
+					if (fileType === 'both' || fileType === 'css') {
+						element = document.createElement('link');
+						element.rel = 'stylesheet';
+						element.href = `${category}/${name}/${name}.css`;
+						document.head.appendChild(element);
+					}
+				} else {
+					if (fileType === 'both' || fileType === 'js') {
+						element = document.createElement('script');
+						element.src = `${category}/${name}.js`;
+						document.head.appendChild(element);
+					}
+					if (fileType === 'both' || fileType === 'css') {
+						element = document.createElement('link');
+						element.rel = 'stylesheet';
+						element.href = `/${category}/${name}.css`;
+						document.head.appendChild(element);
+					}
+				}
+			}
+		}
+	}
+};
+
 index												=	{
 	placement										:	{
 		status										:	undefined,
@@ -97,118 +171,55 @@ index												=	{
 	construct										:	{
 		status										:	false,
 		data										:	undefined,
-		get											:	function(){
-			let getdata								=	$.ajax({
-				url									:	'/app/index/index.json',
-				dataType							:	'json',
-				type								:	'GET',
-				success								:	function(){
-					index.construct.data			=	getdata.responseJSON;
-				}
-			})
-			return getdata;
+
+		get											:	function() {
+			return fetch('/app/index/index.json')
+				.then(response => response.json())
+				.then(data => {
+					index.construct.data = data;
+					return data;
+				});
 		},
 		build										:	async function(){
 			index.head.construct.build();
 			index.body.construct.build();
-		},
-		destroy										:	function(){
-			index.head.construct.destroy();
-			index.body.construct.destroy();
+
+			index.construct.status					=	true;
+			return
 		}
 	},
-	head										:	{
-		construct								:	{
-			status								:	false,
-			data								:	undefined,
-			get									:	function(){
+	head											:	{
+		construct									:	{
+			status									:	false,
+			data									:	undefined,
+			get										:	function(){
 				index.construct.get();
 			},
-			build								:	function(){
-				var append						=	'';
-				append							+=
-				'<!-- 𝗧𝗜𝗧𝗟𝗘 -->' +
-				'<title>' + index.construct.data.title + '</title>';
+			build									:	async function() {
+				constructCategory('title', index.construct.data.title);
+				constructCategory('meta', index.construct.data.meta);
+				constructCategory('modules', index.construct.data.modules, 'js');
+				constructCategory('styling', index.construct.data.styling, 'css');
+				constructCategory('elements', index.construct.data.elements, 'both', 'grouped');
+				constructCategory('layers', index.construct.data.layers, 'both', 'grouped');
 
-				append							+=
-				'<!-- 𝗠𝗘𝗧𝗔 -->';
-				for(var i in index.construct.data.meta){
-					name						=	i;
-					layunder						=	index.construct.data.meta[i];
-					append						+=
-					'<meta 	name="' + name + '"							layunder="' + layunder + '">';
-				}
-
-				append							+=
-				'<!-- 𝗠𝗢𝗗𝗨𝗟𝗘𝗦 -->';
-				for(var i in index.construct.data.modules){
-					name						=	i;
-					layunder						=	index.construct.data.modules[i];
-					append						+=
-					'<script	rel="external"		type="text/javascript"	src="modules/' + name + '.js"></script>';
-				}
-
-				append							+=
-				'<!-- 𝗦𝗧𝗬𝗟𝗜𝗡𝗚 -->';
-				for(var i in index.construct.data.styling){
-					name						=	i;
-					layunder						=	index.construct.data.styling[i];
-					append						+=	'<link	rel="stylesheet"		type="text/css"	href="styling/' + name + '.css"></link>';
-				}
-
-				append							+=
-				'<!-- 𝗘𝗟𝗘𝗠𝗘𝗡𝗧𝗦 -->';
-				append							+=
-				'<script	rel="external"		type="text/javascript"	src="elements/elements.js"></script>';
-				for(var i in index.construct.data.elements){
-					name						=	i;
-					layunder						=	index.construct.data.elements[i];
-					append						+=
-					'<link	rel="stylesheet"		type="text/css"	href="elements/' + name + '/' + name + '.css"></link>'	+
-					'<script	rel="external"		type="text/javascript"	src="elements/' + name + '/' + name + '.js"></script>';
-				}
-
-				append							+=
-				'<!-- 𝗟𝗔𝗬𝗘𝗥𝗦 -->'+
-				'<script	rel="external"		type="text/javascript"	src="layers/layers.js"></script>';
-				for(var i in index.construct.data.layers){
-					name 						=	i;
-					layunder 					=	index.construct.data.layers[i];
-					append						+=
-					'<!-- ' + text.toBold(name.toUpperCase()) + ' -->'+
-					'<script	rel="external"		type="text/javascript"	src="layers/' + name + '/' + name + '.js"></script>' +
-					'<link	rel="stylesheet"		type="text/css"	href="layers/' + name + '/' + name + '.css"></link>';
-				}
-				$('head').append(append);
-				return
-			},
-			destroy								:	function(){
+				index.head.construct.status			=	true;
+				return;
 			}
 		}
 	},
-	body										:	{
-		construct								:	{
-			status								:	false,
-			data								:	undefined,
-			get									:	function(){
+	body											:	{
+		construct									:	{
+			status									:	false,
+			data									:	undefined,
+			get										:	function(){
 				index.construct.get();
 			},
-			build								:	function(){
-				var append						=	'';
+			build									:	async function(){
+				constructCategory('scripts', index.construct.data.scripts, 'js');
 
-				for(var i in index.construct.data.scripts){
-					script						=	index.construct.data.scripts[i]
-					let title					=	(i + '/' + script).toUpperCase();
-					append						+=
-					'<!-- ' + title + ' -->' +
-					'<script type="text/javascript" src="' + i + '/' + script + '.js" defer>' +
-					'</script>';
-				}
-
-				$('body').append(append);
-				index.body.construct.status		=	true;
-			},
-			destroy								:	function (){
+				index.body.construct.status			=	true;
+				return
 			}
 		}
 	}

@@ -14,7 +14,9 @@
 		"effects": {},
 		"styles": {}
 	},
-	"elements": {},
+	"elements": {
+		"bar": {}
+	},
 	"modules": {
 		"cookie": {},
 		"optimize": {},

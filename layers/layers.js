@@ -1,3 +1,5 @@
+console.log('layers.js loaded');
+
 class Layer 									{
     constructor(layername) 									{
         this.layername 										=	"layers-" + layername;
