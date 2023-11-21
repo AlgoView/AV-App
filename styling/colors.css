@@ -34,9 +34,9 @@
 	--color-green-lit						:	hsla(160, 098%, 055%, 1.00)			;
 	--color-green-shade						:	hsla(160, 099%, 016%, 1.00)			;
 
-	--color-base-0							:	hsla(000, 000%, 008%, 1.00)			;
-	--color-base-1							:	hsla(000, 000%, 008%, 1.00)			;
-	--color-base-2							:	hsla(000, 000%, 012%, 1.00)			;
+	--color-base-0							:	rgb(255, 255, 255)			;
+	--color-base-1							:	rgb(236, 236, 236)			;
+	--color-base-2							:	rgb(218, 218, 218)			;
 	--color-base-3							:	hsla(000, 000%, 016%, 1.00)			;
 
 	--color-base-x0							:	hsla(000, 000%, 098%, 0.08)			;

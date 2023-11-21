@@ -91,13 +91,15 @@ window.layers  												=	{
 		for(let layer in index.construct.data.layers){
 			layers[layer] 									=	new Layer(layer);
 		}
-		return new Promise((resolve, reject) => {
-            Object.keys(self).forEach(layer => {
-                if(self.isValidKey(layer)){
-                    let ajaxCall = fetch('layers/' + layer + '/' + layer + '.json')
-                        .then(response => response.json())
-						.then(data => {
-							Object.keys(data).forEach((key) => {
+		return new Promise((resolve, reject)				=>	{
+            Object.keys(self).forEach(layer					=>	{
+
+                if(self.isValidKey(layer))					{
+                    let ajaxCall							=	fetch('layers/' + layer + '/' + layer + '.json')
+                        .then(response						=>	response.json())
+						.then(data							=>	{
+							Object.keys(data).forEach((key)	=>	{
+
 								if (key === 'properties' && data[key] instanceof Object) {
 									Object.keys(data[key]).forEach((propKey) => {
 										if (!layers[layer].properties.hasOwnProperty(propKey)) {
@@ -128,7 +130,7 @@ window.layers  												=	{
 		function createDiv(id) {
 			let div 										=	document.createElement('div');
 			div.id 											=	id;
-			div.style.display 								=	'none';
+			div.style.display 								=	'block';
 			return div;
 		}
 

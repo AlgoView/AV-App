@@ -1,24 +1,24 @@
 /* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ barheader								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
 /* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Control								▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
 :root{
-	--h-height									:	3.6rem								;
+	--bh-height									:	3.6rem								;
 
-	--h-p-icon-height							:	var(--h-height)						;
-	--h-p-icon-width							:	4rem								;
+	--bh-p-icon-height							:	var(--bh-height)						;
+	--bh-p-icon-width							:	4rem								;
 
-	--h-pl-i-width								:	var(--h-p-icon-width)				;
-	--h-pl-l-width								:	11rem								;
+	--bh-pl-i-width								:	var(--bh-p-icon-width)				;
+	--bh-pl-l-width								:	11rem								;
 
-	--h-pe-width								:	calc( 4 * var(--h-p-icon-width) )	;	/* X * 4rem , Amount of Buttons X */
+	--bh-pe-width								:	calc( 4 * var(--bh-p-icon-width) )	;	/* X * 4rem , Amount of Buttons X */
 
-	--h-s-f-width-min							:	calc(100vw - (var(--h-pl-i-width) + var(--h-pl-l-width) + var(--h-pe-width) + var(--h-p-icon-width)));
-	--h-s-f-width-max							:	calc(100vw - ( 2 * ( var(--h-p-icon-width))));
+	--bh-s-f-width-min							:	calc(100vw - (var(--bh-pl-i-width) + var(--bh-pl-l-width) + var(--bh-pe-width) + var(--bh-p-icon-width)));
+	--bh-s-f-width-max							:	calc(100vw - ( 2 * ( var(--bh-p-icon-width))));
 
 
-	--h-s-width									:	auto								;									/* switch between auto and 100vw */
-	--h-s-f-width								:	var(--h-s-f-width-min)				; 									/* Switch between these for MIN MAX ExptoMax DecrtoMin */
-	--h-s-position								:	relative							;
-	--h-s-right									:	var(--h-pe-width)					;
+	--bh-s-width									:	auto								;									/* switch between auto and 100vw */
+	--bh-s-f-width								:	var(--bh-s-f-width-min)				; 									/* Switch between these for MIN MAX ExptoMax DecrtoMin */
+	--bh-s-position								:	relative							;
+	--bh-s-right									:	var(--bh-pe-width)					;
 }
 /* ░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓ Tags									▓▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░ */
 #layers-barheader{
@@ -27,7 +27,7 @@
 	top											:	0									;
 	z-index										:	700									;
 
-	height										:	var(--h-height)						;
+	height										:	var(--bh-height)					;
 	width										:	100vw								;
 
 	margin										:	0	0								;
@@ -45,16 +45,17 @@
 		left									:	0									;
 		z-index									:	1									;
 
-		width									:	calc(var(--h-p-icon-width) + var(--h-pl-l-width) );
+		height									:	var(--bh-height)					;
+		width									:	calc(var(--bh-p-icon-width) + var(--bh-pl-l-width) );
 
 		display									:	flex								;
 		align-items								:	center								;
 		}
 		#layers-barheader-platform-drawer{}
 		#layers-barheader-platform-logo{
-			padding								:	calc(((var(--h-height) - 1.25rem) / 2) - var(--borderpx))	0	;
+			padding								:	calc(((var(--bh-height) - 1.25rem) / 2) - var(--borderpx))	0	;
 
-			width								:	var(--h-pl-l-width)					;
+			width								:	var(--bh-pl-l-width)					;
 
 			font-family							:	'Biryani', sans-serif				;
 			font-size							:	1.25rem								;
@@ -62,12 +63,12 @@
 		}
 	#layers-barheader-search{
 		position								:	absolute							;
-		right									:	var(--h-s-right)					;		
+		right									:	var(--bh-s-right)					;		
 		z-index									:	9									;
 
 		width									:	auto								;
-		height									:	var(--h-height)						;
-		min-width								:	var(--h-p-icon-width)				;
+		height									:	var(--bh-height)					;
+		min-width								:	var(--bh-p-icon-width)				;
 		display									:	flex								;
 		flex-direction							:	row									;
 		background-color						:	var(--color-base-0)					;
@@ -77,23 +78,23 @@
 	}
 		#layers-barheader-search-return{
 			display								:	flex								;
-			width								:	var(--h-p-icon-width)				;
+			width								:	var(--bh-p-icon-width)				;
 		}
 		#layers-barheader-search-button{
 			display								:	flex								;
-			width								:	var(--h-p-icon-width)				;
+			width								:	var(--bh-p-icon-width)				;
 		}
 		#layers-barheader-search-form{
-			display								:	var(--h-s-f-display)				;
-			height								:	var(--h-height)						;	
-			width								:	var(--h-s-f-width)					;
+			display								:	var(--bh-s-f-display)				;
+			height								:	var(--bh-height)						;	
+			width								:	var(--bh-s-f-width)					;
 		}
 			#layers-barheader-search-form-input{
 				box-sizing						:	border-box							;
 				padding							:	0	0	0	1rem					;
 				/* margin							:	0	0	0	1rem					; */
-				height							:	var(--h-height)						;
-				width							:	calc(100vw - (var(--h-pl-i-width) + var(--h-pl-l-width) + var(--h-pe-width) + var(--h-p-icon-width) ));
+				height							:	var(--bh-height)						;
+				width							:	calc(100vw - (var(--bh-pl-i-width) + var(--bh-pl-l-width) + var(--bh-pe-width) + var(--bh-p-icon-width) ));
 				flex-grow						:	5									;
 
 				border							:	0									;
@@ -103,8 +104,9 @@
 		position								:	absolute							;
 		right									:	0									;
 		z-index									:	2									;
-
-		width									:	calc(4 * var(--h-p-icon-width))		;
+		
+		height									:	var(--bh-height)					;
+		width									:	calc(4 * var(--bh-p-icon-width))		;
 
 		display									:	flex								;
 		flex-shrink								:	0									;
@@ -122,13 +124,13 @@
 	justify-content								:	center								;
 	
 	padding										:	1.25rem	0							;
-	min-width									:	var(--h-p-icon-width)				;
+	min-width									:	var(--bh-p-icon-width)				;
 	height										:	3.5rem								;
 	
-	height										:	var(--h-p-icon-height)			;
-	width										:	var(--h-p-icon-width)				;
-	padding										:	calc( (var(--h-p-icon-height) - var(--svg-width-height)) / 2 )
-												calc( (var(--h-p-icon-width) 	- var(--svg-width-height)) / 2 ); /* Remain 1.2 x 1.2 rem cube for icon */
+	height										:	var(--bh-p-icon-height)			;
+	width										:	var(--bh-p-icon-width)				;
+	padding										:	calc( (var(--bh-p-icon-height) - var(--svg-width-height)) / 2 )
+												calc( (var(--bh-p-icon-width) 	- var(--svg-width-height)) / 2 ); /* Remain 1.2 x 1.2 rem cube for icon */
 
 	color										:	var(--color-key-5)					;
 	transition									:	var(--transition-0)					;}

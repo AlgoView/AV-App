@@ -15,3 +15,10 @@ body										{
 div											{
 	box-sizing								:	border-box							;
 }
+/* —————————————————————————————————————————— LAYERS ———————————————————————————————————————————————————————— */
+#layers{
+	position								:	absolute							;
+	width									:	100vw								;
+	height									:	100vh								;
+	overflow								:	hidden								;
+}
