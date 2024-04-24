@@ -1,8 +1,0 @@
-elements.bar                = {
-    full                    : {
-        
-    },
-    half                    : {
-    
-    }
-}
