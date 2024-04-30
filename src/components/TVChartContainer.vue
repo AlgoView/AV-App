@@ -1,3 +1,7 @@
+<template>
+	<div class="TVChartContainer" ref="chartContainer" />
+</template>
+
 <script setup>
 import { onMounted, ref, onUnmounted } from "vue";
 import { widget } from "../../public/charting_library";
@@ -78,6 +82,7 @@ onMounted(() => {
 		fullscreen					: props.fullscreen,
 		autosize					: props.autosize,
 		studies_overrides			: props.studiesOverrides,
+		custom_css_url				: '../../src/assets/css/charting_library.css',
 	};
 	chartWidget = new widget(widgetOptions);
 
@@ -112,13 +117,9 @@ onUnmounted(() => {
 });
 </script>
 
-<template>
-	<div class="TVChartContainer" ref="chartContainer" />
-</template>
-
 <style scoped>
 .TVChartContainer {
 	height: calc(100vh);
-	WIDTH: 100VW;
+	width: 100VW;
 }
 </style>
