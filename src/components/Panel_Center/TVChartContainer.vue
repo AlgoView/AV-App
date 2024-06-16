@@ -4,8 +4,9 @@
 
 <script setup>
 import { onMounted, ref, onUnmounted } from "vue";
-import { widget } from "../../public/charting_library";
-import { UDFCompatibleDatafeed } from "../../public/datafeeds/udf/src/udf-compatible-datafeed";
+import { widget } from "@public/charting_library";
+import { UDFCompatibleDatafeed } from "@public/datafeeds/udf/src/udf-compatible-datafeed";
+
 
 function getLanguageFromURL() {
 	const regex = new RegExp("[\\?&]lang=([^&#]*)");
@@ -119,7 +120,7 @@ onUnmounted(() => {
 
 <style scoped>
 .TVChartContainer {
-	height: calc(100vh);
-	width: 100VW;
+	height: 100%;
+	width: 100%;
 }
 </style>

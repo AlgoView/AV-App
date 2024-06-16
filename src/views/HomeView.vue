@@ -1,5 +1,5 @@
 <script setup>
-import TVChartContainer from "@/components/TVChartContainer.vue";
+import TVChartContainer from "@/components/Panel_Center/TVChartContainer.vue";
 </script>
 
 <template>
