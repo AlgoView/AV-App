@@ -1,6 +1,10 @@
 <template>
 	<div id="panel-center_left">
 			<TVChartContainer />
+			<div id="panel-center_left_right">
+				<div id="panel-center_left_right_top" class="panel left"></div>
+				<div id="panel-center_left_right_center" class="panel left"></div>
+			</div>
 	</div>
 </template>
 

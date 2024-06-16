@@ -1,16 +1,12 @@
 <template>
 	<div id="panel-center_right">
-		<div id="panel-center_right_top">
-			<div class="trim-r"></div>
-			<div class="cont-l"></div>
+		<div id="panel-center_right_top" class="panel right">
 		</div>
 		<div id="panel-center_right_center">
-			<div class="trim-r"></div>
-			<div id="panel-center_right_center-content">
-				<div id="panel-center_right_center-content-content">
-				</div>
+			<div id="panel-center_right_center_left" class="panel center">
 			</div>
-			<div id="panel-center_right_center-right"></div>
+			<div id="panel-center_right_center_right" class="panel right">
+			</div>
 		</div>
 	</div>
 </template>
@@ -50,37 +46,5 @@ export default {
 </script>
 
 <style scoped>
-.trim-r {
-	background-color: var(--tv-color-pane-background);
-	border-radius: 0 var(--panel-corner-radius) var(--panel-corner-radius) 0;
-	height:100%;
-	width: var(--panel-spacing);
-}
-.cont-l {
-	background-color: var(--tv-color-pane-background);
-	border-radius:  var(--panel-corner-radius) 0 0 var(--panel-corner-radius);
-	height:100%;
-	width: 100%;
-}
-#panel-center_right_center-content {
-	box-sizing: border-box;
-	background-color: var(--tv-color-platform-background);
-	height:100%;
-	width: calc(100% - var(--panel-spacing));
-	
-}
-#panel-center_right_center-content-content {
-	background-color: var(--tv-color-pane-background);
-	border-radius: var(--panel-corner-radius);
-	height:100%;
-	width: 100%;
-}
 
-#panel-center_right_center-right {
-	background-color: var(--tv-color-pane-background);
-	border-radius: var(--panel-corner-radius) 0  0 var(--panel-corner-radius);
-	height:100%;
-	width: 100%;
-	justify-self: end;
-}
 </style>

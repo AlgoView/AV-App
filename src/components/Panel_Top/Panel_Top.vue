@@ -1,15 +1,13 @@
 <template>
-  <div id="panel-top">
-    <div id="panel-top_left">
-		<div id="panel-top_left_algoview-button" class="button">
-			<img src="@/assets/icons/algoview.svg" alt="AV"/>
-		</div>
-		<div id="panel-top_left_algoview-title" class="panel-title">
-			AlgoView
-		</div>
+  <div id="panel-top" class="panel">
+    <div id="panel-top_platform-button" class="button">
+		<img src="@/assets/icons/algoview.svg" alt="AV"/>
 	</div>
-	<div id="panel-top_right">
-		
+	<div id="panel-top_platform-title" class="panel-title">
+			AlgoView
+	</div>
+	<div id="panel-top_user-button" class="button">
+		user
 	</div>
   </div>
 </template>
@@ -50,22 +48,4 @@ export default {
 </script>
 
 <style scoped>
-#panel-top_left_algoview-button{
-	width: calc(var(--panel-top-height) - var(--panel-padding-horizontal) * 2);
-	height: calc(var(--panel-top-height) - var(--panel-padding-horizontal) * 2);
-	margin-right: var(--panel-padding-horizontal);
-}
-.button img{
-	width: 100%;
-	height: 100%;
-	border-radius: var(--panel-corner-radius);
-}
-.panel-title{
-	font-size: var(--panel-title-font-size);
-	font-weight: var(--panel-title-font-weight);
-	font-family: var(--panel-title-font-family);
-	width: 20rem;
-	height: calc(var(--panel-top-height) - var(--panel-padding-horizontal) * 2);
-	margin-left: var(--panel-spacing);
-}
 </style>

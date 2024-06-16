@@ -1,5 +1,5 @@
 <template>
-	<div id="panel-bottom">
+	<div id="panel-bottom" class="panel">
 	  <div id="panel-bottom_left">
 		  
 	  </div>

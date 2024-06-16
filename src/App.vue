@@ -12,7 +12,4 @@ import Panel_Center from "@/components/Panel_Center/Panel_Center.vue";
 import Panel_Bottom from "@/components/Panel_Bottom/Panel_Bottom.vue";
 </script>
 
-<style scoped src="@/assets/css/main.css"></style>
-<style scoped>
-
-</style>
+<style scoped></style>
