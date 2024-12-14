@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart'; // Import AppTheme
 
 class PanelOrder extends StatelessWidget {
   final Color backgroundColor;
@@ -13,7 +14,7 @@ class PanelOrder extends StatelessWidget {
       child: const Center(
         child: Text(
           'Order Panel',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppTheme.activeIconColor),
         ),
       ),
     );

@@ -1,5 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../widgets/bar_bottom.dart';
+import '../widgets/bar_side.dart';
+import '../widgets/panel_order.dart';
+import '../widgets/panel_positions.dart';
+import '../widgets/panel_wallet.dart';
+import '../utils/manager_drag.dart';
+import '../theme/colors.dart';
 
 class TerminalScreen extends StatefulWidget {
 	const TerminalScreen({Key? key}) : super(key: key);
@@ -9,59 +16,39 @@ class TerminalScreen extends StatefulWidget {
 }
 
 class _TerminalScreenState extends State<TerminalScreen> {
-	// Look and feel control variables
-	final double minBottomPanelHeight = 100;
-	final double collapseThreshold = 50.0;
-	final double initialBottomPanelHeight = 200;
-	final double bottomBarHeight = 40;
-	final double dragAreaHeight = 4;
-	final double sidebarWidth = 50;
-	final double sidePanelContainerWidth = 300;
-	final double hoverDelayMilliseconds = 200;
-	final Color backgroundColor = const Color.fromARGB(255, 31, 31, 31);
-	final Color panelColor = const Color.fromARGB(255, 24, 24, 24).withOpacity(1);
-	final Color panelBorderColor = const Color.fromARGB(255, 40, 40, 40);
-	final Color highlightColor = Colors.blue;
-	final Color activeIconColor = Colors.white;
-	final Color inactiveIconColor = Colors.white54;
-	final Color dividerColor = const Color.fromARGB(255, 54, 54, 54);
+	final ManagerDrag _dragManager = ManagerDrag();
 
-	// State variables
 	bool showOrderPanel = false;
 	bool showWalletPanel = false;
 	bool showPositionsPanel = true;
-	bool isSidebarOnRight = false;
 	double bottomPanelHeight = 200;
-	bool isDragging = false;
-	bool isHovered = false;
-	double dragStartY = 0;
+	bool isSidebarOnRight = false;
 	Offset _tapPosition = Offset.zero;
 
-	Timer? hoverTimer;
+	// Hover/Highlight state
+	bool _isHoverHighlight = false;
 
 	@override
 	void dispose() {
-		hoverTimer?.cancel();
 		super.dispose();
 	}
 
 	@override
 	Widget build(BuildContext context) {
-		bool sidePanelVisible = showOrderPanel || showWalletPanel;
 		double maxBottomPanelHeight =
-			MediaQuery.of(context).size.height - bottomBarHeight - sidebarWidth;
+				MediaQuery.of(context).size.height - BarBottom.height - BarBottom.dragAreaHeight;
 
 		List<Widget> layoutChildren = isSidebarOnRight
-			? [
-				_buildMainContent(maxBottomPanelHeight),
-				if (sidePanelVisible) _buildSidePanelContainer(),
-				_buildSidebar(),
-			]
-			: [
-				_buildSidebar(),
-				if (sidePanelVisible) _buildSidePanelContainer(),
-				_buildMainContent(maxBottomPanelHeight),
-			];
+				? [
+						_buildMainContent(maxBottomPanelHeight),
+						if (showOrderPanel || showWalletPanel) _buildSidePanelContainer(),
+						_buildSidebar(),
+					]
+				: [
+						_buildSidebar(),
+						if (showOrderPanel || showWalletPanel) _buildSidePanelContainer(),
+						_buildMainContent(maxBottomPanelHeight),
+					];
 
 		return Scaffold(
 			body: SafeArea(
@@ -80,94 +67,87 @@ class _TerminalScreenState extends State<TerminalScreen> {
 		return Expanded(
 			child: Stack(
 				children: [
+					// Main Background
 					Positioned.fill(
-						child: Container(color: backgroundColor),
+						child: Container(color: AppTheme.backgroundColor),
 					),
-					if (showPositionsPanel) ...[
+
+					// Bottom Panel
+					if (bottomPanelHeight > 0)
 						Positioned(
 							left: 0,
 							right: 0,
-							bottom: bottomPanelHeight + bottomBarHeight,
-							height: dragAreaHeight,
-							child: MouseRegion(
-								cursor: SystemMouseCursors.resizeRow,
-								onEnter: (_) {
-									if (!isDragging) {
-										hoverTimer = Timer(Duration(milliseconds: hoverDelayMilliseconds.toInt()), () {
-											if (mounted) {
-												setState(() {
-													isHovered = true;
-												});
-											}
-										});
-									}
+							bottom: BarBottom.height,
+							height: bottomPanelHeight,
+							child: PanelPositions(
+								height: bottomPanelHeight,
+							),
+						),
+
+					// Draggable Area
+					Positioned(
+						left: 0,
+						right: 0,
+						bottom: bottomPanelHeight + BarBottom.height,
+						height: BarBottom.dragAreaHeight,
+						child: MouseRegion(
+							cursor: SystemMouseCursors.resizeRow,
+							onEnter: (_) => _dragManager.manageHover(true, (isHighlight) {
+								setState(() => _isHoverHighlight = isHighlight);
+							}),
+							onExit: (_) => _dragManager.manageHover(false, (isHighlight) {
+								setState(() => _isHoverHighlight = isHighlight);
+							}),
+							child: GestureDetector(
+								behavior: HitTestBehavior.translucent,
+								onPanStart: (details) {
+									_dragManager.onDragStart(details.globalPosition.dy);
+									setState(() => _isHoverHighlight = true);
 								},
-								onExit: (_) {
-									if (!isDragging) {
-										hoverTimer?.cancel();
-										setState(() {
-											isHovered = false;
-										});
-									}
+								onPanUpdate: (details) {
+									setState(() {
+										bottomPanelHeight = _dragManager.handleDrag(
+											details.globalPosition.dy.toDouble(),
+											bottomPanelHeight,
+											maxBottomPanelHeight,
+										);
+										showPositionsPanel = bottomPanelHeight > 0;
+									});
 								},
-								child: GestureDetector(
-									behavior: HitTestBehavior.translucent,
-									onPanStart: (details) {
-										hoverTimer?.cancel();
-										setState(() {
-											isDragging = true;
-											isHovered = true;
-											dragStartY = details.globalPosition.dy;
-										});
-									},
-									onPanEnd: (_) {
-										setState(() {
-											isDragging = false;
-										});
-									},
-									onPanCancel: () {
-										setState(() {
-											isDragging = false;
-										});
-									},
-									onPanUpdate: (details) {
-										setState(() {
-											double dragDelta = dragStartY - details.globalPosition.dy;
-											dragStartY = details.globalPosition.dy;
-											bottomPanelHeight += dragDelta;
-											if (bottomPanelHeight < minBottomPanelHeight - collapseThreshold) {
-												showPositionsPanel = false;
-												bottomPanelHeight = minBottomPanelHeight;
-											} else if (bottomPanelHeight >= minBottomPanelHeight) {
-												showPositionsPanel = true;
-												bottomPanelHeight = bottomPanelHeight.clamp(minBottomPanelHeight, maxBottomPanelHeight);
-											}
-										});
-									},
-									child: AnimatedOpacity(
-										opacity: isDragging || isHovered ? 1.0 : 0.0,
-										duration: const Duration(milliseconds: 200),
-										child: Container(
-											color: highlightColor,
-										),
-									),
+								onPanEnd: (_) {
+									_dragManager.onDragEnd(
+										bottomPanelHeight,
+										(newHeight, isVisible) {
+											setState(() {
+												bottomPanelHeight = newHeight.toDouble();
+												showPositionsPanel = isVisible;
+											});
+										},
+									);
+								},
+								child: AnimatedContainer(
+									duration: _dragManager.isDragging
+											? Duration.zero
+											: const Duration(milliseconds: 200),
+									color: (_dragManager.isDragging || _isHoverHighlight)
+											? AppTheme.highlightColor
+											: Colors.transparent,
 								),
 							),
 						),
-						Positioned(
-							left: 0,
-							right: 0,
-							bottom: bottomBarHeight,
-							height: bottomPanelHeight,
-							child: _buildBottomPositionsPanel(),
-						),
-					],
+					),
+
+					// Bottom Bar
 					Positioned(
 						left: 0,
 						right: 0,
 						bottom: 0,
-						height: bottomBarHeight,
-						child: _buildBottomBar(),
+						child: BarBottom(
+							isActive: showPositionsPanel,
+							activeColor: AppTheme.activeIconColor,
+							inactiveColor: AppTheme.inactiveIconColor,
+							onToggle: _togglePositionsPanel,
+						),
 					),
 				],
 			),
@@ -179,155 +159,74 @@ class _TerminalScreenState extends State<TerminalScreen> {
 			onSecondaryTapDown: (details) {
 				_tapPosition = details.globalPosition;
 			},
-			onSecondaryTap: () {
-				_showContextMenu();
-			},
-			child: Container(
-				width: sidebarWidth,
-				padding: const EdgeInsets.only(top: 5),
-				decoration: BoxDecoration(
-					color: panelColor,
-					border: Border(
-						left: isSidebarOnRight ? BorderSide(color: panelBorderColor, width: 1) : BorderSide.none,
-						right: isSidebarOnRight ? BorderSide.none : BorderSide(color: panelBorderColor, width: 1),
-					),
-				),
-				child: Column(
-					mainAxisAlignment: MainAxisAlignment.start,
-					children: [
-						IconButton(
-							icon: const Icon(Icons.shopping_cart),
-							color: showOrderPanel ? activeIconColor : inactiveIconColor,
-							onPressed: () {
-								setState(() {
-									showOrderPanel = !showOrderPanel;
-									if (showOrderPanel) {
-										showWalletPanel = false;
-									}
-								});
-							},
-						),
-						const SizedBox(height: 10),
-						IconButton(
-							icon: const Icon(Icons.account_balance_wallet),
-							color: showWalletPanel ? activeIconColor : inactiveIconColor,
-							onPressed: () {
-								setState(() {
-									showWalletPanel = !showWalletPanel;
-									if (showWalletPanel) {
-										showOrderPanel = false;
-									}
-								});
-							},
-						),
-					],
-				),
+			onSecondaryTap: _showContextMenu,
+			child: BarSide(
+				isRightAligned: isSidebarOnRight,
+				isOrderPanelVisible: showOrderPanel,
+				isWalletPanelVisible: showWalletPanel,
+				toggleOrderPanel: _toggleOrderPanel,
+				toggleWalletPanel: _toggleWalletPanel,
+				activeColor: AppTheme.activeIconColor,
+				inactiveColor: AppTheme.inactiveIconColor,
+				panelColor: AppTheme.panelColor,
+				panelBorderColor: AppTheme.panelBorderColor,
 			),
 		);
 	}
 
 	Widget _buildSidePanelContainer() {
 		return Container(
-			width: sidePanelContainerWidth,
+			width: 300,
 			decoration: BoxDecoration(
-				color: panelColor,
+				color: AppTheme.panelColor,
 				border: Border(
-					left: isSidebarOnRight ? BorderSide(color: panelBorderColor, width: 1) : BorderSide.none,
-					right: isSidebarOnRight ? BorderSide.none : BorderSide(color: panelBorderColor, width: 1),
+					left: isSidebarOnRight ? BorderSide(color: AppTheme.panelBorderColor, width: 1) : BorderSide.none,
+					right: isSidebarOnRight ? BorderSide.none : BorderSide(color: AppTheme.panelBorderColor, width: 1),
 				),
 			),
-			child: _buildSidePanel(),
-		);
-	}
-
-	Widget _buildSidePanel() {
-		return Column(
-			children: [
-				if (showOrderPanel)
-					Expanded(
-						flex: showWalletPanel ? 1 : 2,
-						child: _buildOrderPanel(),
-					),
-				if (showOrderPanel && showWalletPanel)
-					Divider(height: 1, color: dividerColor),
-				if (showWalletPanel)
-					Expanded(
-						flex: showOrderPanel ? 1 : 2,
-						child: _buildWalletPanel(),
-					),
-			],
-		);
-	}
-
-	Widget _buildOrderPanel() {
-		return Container(
-			padding: const EdgeInsets.all(16),
-			color: panelColor,
-			child: const Center(
-				child: Text(
-					'Order Form Panel',
-					style: TextStyle(color: Colors.white),
-				),
-			),
-		);
-	}
-
-	Widget _buildWalletPanel() {
-		return Container(
-			padding: const EdgeInsets.all(16),
-			color: panelColor,
-			child: const Center(
-				child: Text(
-					'Wallet Panel',
-					style: TextStyle(color: Colors.white),
-				),
-			),
-		);
-	}
-
-	Widget _buildBottomPositionsPanel() {
-		return Container(
-			decoration: BoxDecoration(
-				color: panelColor,
-				border: Border(
-					top: BorderSide(color: panelBorderColor, width: 1),
-				),
-			),
-			padding: const EdgeInsets.all(16),
-			child: const Center(
-				child: Text(
-					'Positions Panel',
-					style: TextStyle(color: Colors.white),
-				),
-			),
-		);
-	}
-
-	Widget _buildBottomBar() {
-		return Container(
-			decoration: BoxDecoration(
-				color: panelColor,
-				border: Border(
-					top: BorderSide(color: panelBorderColor, width: 1),
-				),
-			),
-			child: Row(
-				mainAxisAlignment: MainAxisAlignment.start, // Align icons to the left
+			child: Column(
 				children: [
-					IconButton(
-						icon: Icon(
-							Icons.list_alt, // Keep a consistent icon
-							color: showPositionsPanel ? activeIconColor : inactiveIconColor,
+					if (showOrderPanel)
+						Expanded(
+							flex: showWalletPanel ? 1 : 2,
+							child: PanelOrder(backgroundColor: AppTheme.panelColor),
 						),
-						onPressed: () {
-							setState(() {
-								showPositionsPanel = !showPositionsPanel;
-							});
-						},
-					),
+					if (showOrderPanel && showWalletPanel)
+						Divider(color: AppTheme.panelBorderColor, height: 1),
+					if (showWalletPanel)
+						Expanded(
+							flex: showOrderPanel ? 1 : 2,
+							child: PanelWallet(backgroundColor: AppTheme.panelColor),
+						),
 				],
 			),
 		);
+	}
+
+	void _toggleOrderPanel() {
+		setState(() {
+			showOrderPanel = !showOrderPanel;
+			if (showOrderPanel) showWalletPanel = false;
+		});
+	}
+
+	void _toggleWalletPanel() {
+		setState(() {
+			showWalletPanel = !showWalletPanel;
+			if (showWalletPanel) showOrderPanel = false;
+		});
+	}
+
+	void _togglePositionsPanel() {
+		setState(() {
+			if (showPositionsPanel) {
+				bottomPanelHeight = 0;
+				showPositionsPanel = false;
+			} else {
+				bottomPanelHeight = PanelPositions.minHeight;
+				showPositionsPanel = true;
+			}
+		});
 	}
 
 	void _showContextMenu() {
@@ -357,9 +256,9 @@ class _TerminalScreenState extends State<TerminalScreen> {
 				});
 			} else if (value == "right") {
 				setState(() {
-			isSidebarOnRight = true;
+					isSidebarOnRight = true;
+				});
+			}
 		});
-		}
-	});
 	}
 }

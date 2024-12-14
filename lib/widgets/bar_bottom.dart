@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart';
 
 class BarBottom extends StatelessWidget {
   final bool isActive;
   final Color activeColor;
   final Color inactiveColor;
   final VoidCallback onToggle;
+
+  static const double height = 45; // Static constant
+  static const double dragAreaHeight = 5; // Static constant
 
   const BarBottom({
     Key? key,
@@ -17,10 +21,11 @@ class BarBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       decoration: BoxDecoration(
-        color: Colors.black, // Adjust based on your theme
+        color: AppTheme.panelColor,
         border: Border(
-          top: BorderSide(color: Colors.grey.shade700, width: 1),
+          top: BorderSide(color: AppTheme.panelBorderColor, width: 1),
         ),
       ),
       child: Row(

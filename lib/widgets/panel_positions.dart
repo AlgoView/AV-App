@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart'; // Import AppTheme
 
 class PanelPositions extends StatelessWidget {
   final double height;
-  final Color backgroundColor;
-  final Color borderColor;
+
+  static const double minHeight = 100; // Static constant
 
   const PanelPositions({
     Key? key,
     required this.height,
-    required this.backgroundColor,
-    required this.borderColor,
   }) : super(key: key);
 
   @override
@@ -17,16 +16,16 @@ class PanelPositions extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: AppTheme.panelColor,
         border: Border(
-          top: BorderSide(color: borderColor, width: 1),
+          top: BorderSide(color: AppTheme.panelBorderColor, width: 1),
         ),
       ),
       padding: const EdgeInsets.all(16),
       child: const Center(
         child: Text(
           'Positions Panel',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppTheme.activeIconColor),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart'; // Import AppTheme
 
 class PanelWallet extends StatelessWidget {
   final Color backgroundColor;
@@ -13,7 +14,7 @@ class PanelWallet extends StatelessWidget {
       child: const Center(
         child: Text(
           'Wallet Panel',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppTheme.activeIconColor),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart';
 
 class BarSide extends StatelessWidget {
   final bool isRightAligned;
@@ -10,6 +11,8 @@ class BarSide extends StatelessWidget {
   final Color inactiveColor;
   final Color panelColor;
   final Color panelBorderColor;
+  static const double width = 50;
+  static const double panelWidth = 300.0;
 
   const BarSide({
     Key? key,
@@ -27,7 +30,7 @@ class BarSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
+      width: width,
       decoration: BoxDecoration(
         color: panelColor,
         border: Border(
@@ -58,3 +61,4 @@ class BarSide extends StatelessWidget {
     );
   }
 }
+

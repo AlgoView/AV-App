@@ -1,40 +1,51 @@
-import 'package:flutter/material.dart';
-
 class ManagerDrag {
-  bool isHovered = false;
-  bool isDragging = false;
-  double dragStartY = 0;
+	bool isDragging = false;
+	double dragStartY = 0;
+	bool isHoverHighlight = false;
+	static const double collapseThreshold = 60.0;
+	static const double minHeight = 200.0;
 
-  void onDragStart(double startY) {
-    isDragging = true;
-    dragStartY = startY;
-  }
+	void onDragStart(double startY) {
+		isDragging = true;
+		dragStartY = startY;
+	}
 
-  double onDragUpdate(double currentY, double previousHeight, double min, double max, Function(bool) togglePanel) {
-    double delta = dragStartY - currentY;
-    dragStartY = currentY;
-    double newHeight = previousHeight + delta;
+	void onDragEnd(double currentHeight, Function updateState) {
+		isDragging = false;
 
-    if (newHeight < min) {
-      togglePanel(false);
-      return min;
-    } else if (newHeight >= min) {
-      togglePanel(true);
-      return newHeight.clamp(min, max);
-    }
+		// Finalize height
+		if (currentHeight < collapseThreshold) {
+			updateState(0, false); // Collapse
+		} else if (currentHeight < minHeight) {
+			updateState(minHeight, true); // Set to minimum height
+		}
+	}
 
-    return previousHeight;
-  }
+	double handleDrag(double currentY, double currentHeight, double maxHeight) {
+		double dragDelta = dragStartY - currentY;
+		dragStartY = currentY;
 
-  void onDragEnd() {
-    isDragging = false;
-  }
+		if (currentHeight == 0 && dragDelta < -collapseThreshold) {
+			return minHeight; // Expand from collapsed
+		}
 
-  void onHoverEnter() {
-    isHovered = true;
-  }
+		if (currentHeight > 0) {
+			double newHeight = currentHeight + dragDelta;
+			return newHeight.clamp(0, maxHeight); // Clamp height
+		}
 
-  void onHoverExit() {
-    isHovered = false;
-  }
+		return currentHeight;
+	}
+
+	void manageHover(bool isEntering, Function updateState) {
+		if (isEntering) {
+			Future.delayed(const Duration(milliseconds: 200), () {
+				if (!isDragging) {
+					updateState(true); // Highlight on hover
+				}
+			});
+		} else {
+			updateState(false); // Remove highlight
+		}
+	}
 }
