@@ -64,6 +64,7 @@ class _TerminalScreenState extends State<TerminalScreen> {
 							onHeightChanged: (newHeight) {
 								setState(() => bottomPanelHeight = newHeight);
 							},
+              				isVisible: showPositionsPanel, // Add this parameter
 						),
 					Positioned(
 						left: 0,
@@ -149,14 +150,14 @@ class _TerminalScreenState extends State<TerminalScreen> {
 	void _togglePositionsPanel() {
 		setState(() {
 			if (showPositionsPanel) {
-				bottomPanelHeight = 0;
 				showPositionsPanel = false;
 			} else {
-				bottomPanelHeight = PanelPositions.minHeight;
 				showPositionsPanel = true;
+				// Restore height to the last known height stored in bottomPanelHeight
 			}
 		});
 	}
+
 
 	void _showContextMenu() {
 		final size = MediaQuery.of(context).size;
