@@ -1,4 +1,4 @@
-package com.example.algoview_app
+package com.example.alogoview_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-# algoview_app
+# alogoview_app
 
 A new Flutter project.
 

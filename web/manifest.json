@@ -1,6 +1,6 @@
 {
-    "name": "algoview_app",
-    "short_name": "algoview_app",
+    "name": "alogoview_app",
+    "short_name": "alogoview_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
